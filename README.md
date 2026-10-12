@@ -57,3 +57,6 @@ Invoke-RestMethod -Uri "https://raw.githubusercontent.com/Msgames79/hff_revertbe
 ## バージョン履歴
 ### 1.0.0
 初回リリース
+
+### 1.0.1
+`flag`が最初から`false`になっていたのを修正
