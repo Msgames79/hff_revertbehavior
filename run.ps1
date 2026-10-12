@@ -2,6 +2,7 @@ Set-Location $PSScriptRoot
 
 dotnet build
 if ($?) {
+    dotnet build -c Release
     $ErrorActionPreference = 'Continue'
     if (Get-ItemPropertyValue "HKCU:\Software\Valve\Steam\Apps\477160" "Running") {
         "Waiting HFF to dddClose"

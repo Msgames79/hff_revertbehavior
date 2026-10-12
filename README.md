@@ -1,4 +1,4 @@
-# hff_revertbehavior - Revert something. 今は無きあの仕様をもう一度。
+# hff_RevertbeBavior - Revert something. 今は無きあの仕様をもう一度。
 
 ## 機能一覧 (全てGUIとコマンドの両方からアクセス可能)
 ### カメラ衝突の復活(ダークのゴール判定とか)(Jail Updateから)
@@ -39,7 +39,7 @@ rb rws [<option>]
 `<option>`は全て設定する値が`bool`なので共通
 - 引数なし : `True`/`False`を切り替え
 - 正規表現`^(t(rue)?|1|on)$`に一致する場合: `True`に設定
-- 正規表現`^(f(alse)?|0|off)$`に一致する場合: `false`に設定
+- 正規表現`^(f(alse)?|0|off)$`に一致する場合: `False`に設定
 
 
 ## インストール

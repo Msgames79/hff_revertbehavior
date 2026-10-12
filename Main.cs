@@ -195,7 +195,7 @@ public class Main : BaseUnityPlugin
         [HarmonyPrefix]
         public static bool Invoke(ref Vector3 pos, ref Human __instance)
         {
-            bool flag = false;
+            bool flag = true;
             if (revertWaterSpawn && Game.instance.currentLevelType == WorkshopItemSource.BuiltIn && Game.instance.currentLevelNumber == 6 && Game.instance.currentCheckpointNumber == 0)
             {
                 pos = new Vector3(-70.61f, 0.71f, 67.91f);
@@ -204,6 +204,7 @@ public class Main : BaseUnityPlugin
             {
                 __instance.state = HumanState.Spawning;
                 Vector3 vector = __instance.KillHorizontalVelocity();
+                int num = 2;
                 if (Game.currentLevel != null)
                 {
                     float maxHumanVelocity = Game.currentLevel.MaxHumanVelocity;
@@ -213,7 +214,6 @@ public class Main : BaseUnityPlugin
                         vector = new Vector3(0f, 0f - maxHumanVelocity, 0f);
                     }
                 }
-                int num = 2;
                 Vector3 position = pos - vector * num - Physics.gravity * num * num / 2f;
                 __instance.SetPosition(position);
                 if (vector.magnitude < 5f)
