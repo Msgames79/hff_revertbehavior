@@ -4,6 +4,7 @@
 ### カメラ衝突の復活(ダークのゴール判定とか)(Jail Updateから)
 ### リスポーン高度の変更(10th Anniversary Updateから)
 ### ウォーター旧スポーンの復活(City Updateから?)
+### カメラ描画の変更(ボブの頭がカメラに近いときの挙動)(idk)
 
 ### コマンド追加
 基本コマンド : 
@@ -36,6 +37,13 @@ revertbehavior revertwaterspawn [<option>]
 ```
 rb rws [<option>]
 ```
+カメラ描画の変更(ボブの頭がカメラに近いときの挙動)
+```
+revertbehavior revertfpsrendering [<option>]
+```
+```
+rb rfr [<option>]
+```
 `<option>`は全て設定する値が`bool`なので共通
 - 引数なし : `True`/`False`を切り替え
 - 正規表現`^(t(rue)?|1|on)$`に一致する場合: `True`に設定
@@ -60,3 +68,6 @@ Invoke-RestMethod -Uri "https://raw.githubusercontent.com/Msgames79/hff_revertbe
 
 ### 1.0.1
 `flag`が最初から`false`になっていたのを修正
+
+### 1.1.0
+'カメラ描画の変更'を追加

@@ -30,6 +30,7 @@ public class Main : BaseUnityPlugin
     public static bool collideDefaultTrigger = false;
     public static bool revertRespawnHeight = false;
     public static bool revertWaterSpawn = false;
+    public static bool revertFpsRendering = false;
     private static Rect mainWindowRect;
 
     void Start()
@@ -90,6 +91,17 @@ public class Main : BaseUnityPlugin
                     SetBooleanCommand(ref revertWaterSpawn, nameof(revertWaterSpawn), args[1]);
                     return;
                 }
+            case "revertfpsrendering":
+            case "rfr":
+                {
+                    if (args.Length == 1)
+                    {
+                        SetBooleanCommand(ref revertFpsRendering, nameof(revertFpsRendering), "");
+                        return;
+                    }
+                    SetBooleanCommand(ref revertFpsRendering, nameof(revertFpsRendering), args[1]);
+                    return;
+                }
             default:
                 {
                     Debug.Log("Invalid argument");
@@ -104,6 +116,20 @@ public class Main : BaseUnityPlugin
         if (Input.GetKeyDown(KeyCode.Home))
         {
             guiOpened = !guiOpened;
+        }
+        if (NetGame.isLocal)
+        {
+            if (Camera.main.name == "GameCamera(Clone)" && Camera.main.renderingPath != RenderingPath.Forward)
+            {
+                if (revertFpsRendering)
+                {
+                    Camera.main.renderingPath = RenderingPath.Forward;
+                }
+            }
+            else if (Camera.main.name == "GameCamera(Clone)" && !revertFpsRendering)
+            {
+                Camera.main.renderingPath = RenderingPath.UsePlayerSettings;
+            }
         }
     }
     private static GUILayoutOption[] expandOptions;
@@ -139,6 +165,7 @@ public class Main : BaseUnityPlugin
                     collideDefaultTrigger = GUILayout.Toggle(collideDefaultTrigger, "Collide Defalt Trigger", noWrapToggleStyle, expandOptions);
                     revertRespawnHeight = GUILayout.Toggle(revertRespawnHeight, "Revert Respawn Height", noWrapToggleStyle, expandOptions);
                     revertWaterSpawn = GUILayout.Toggle(revertWaterSpawn, "Revert Water Spawn", noWrapToggleStyle, expandOptions);
+                    revertFpsRendering = GUILayout.Toggle(revertFpsRendering, "Revert FPS Rendering", noWrapToggleStyle, expandOptions);
                     break;
                 }
             default:
