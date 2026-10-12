@@ -1,0 +1,471 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net46</TargetFramework>
+        <AssemblyName>hff_RevertBehavior</AssemblyName>
+        <Product>Restore something</Product>
+        <Version>1.0.0</Version>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <LangVersion>latest</LangVersion>
+        <RestoreAdditionalProjectSources>
+            https://api.nuget.org/v3/index.json;
+            https://nuget.bepinex.dev/v3/index.json;
+            https://nuget.samboy.dev/v3/index.json
+        </RestoreAdditionalProjectSources>
+        <RootNamespace>hff_revertbehavior</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+        <PackageReference Include="BepInEx.Core" Version="5.*" />
+        <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+        <PackageReference Include="rainbowblood.UniverseLib.Mono" Version="2.0.0" />
+        <PackageReference Include="UnityEngine.Modules" Version="2017.4.13" IncludeAssets="compile" />
+        <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3"
+            PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2"
+            PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="0Harmony">
+            <HintPath>lib\0Harmony.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Assembly-CSharp-firstpass">
+            <HintPath>lib\Assembly-CSharp-firstpass.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>lib\Assembly-CSharp.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="HumanAPI">
+            <HintPath>lib\HumanAPI.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="KdTreeLib">
+            <HintPath>lib\KdTreeLib.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="MeshBakerCore">
+            <HintPath>lib\MeshBakerCore.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Mono.Posix">
+            <HintPath>lib\Mono.Posix.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Mono.Security">
+            <HintPath>lib\Mono.Security.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="mscorlib">
+            <HintPath>lib\mscorlib.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="pb_Stl">
+            <HintPath>lib\pb_Stl.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Poly2Tri">
+            <HintPath>lib\Poly2Tri.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="ProBuilderCore-Unity5">
+            <HintPath>lib\ProBuilderCore-Unity5.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="ProBuilderMeshOps-Unity5">
+            <HintPath>lib\ProBuilderMeshOps-Unity5.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="SumoPlatformLibrary">
+            <HintPath>lib\SumoPlatformLibrary.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.Configuration">
+            <HintPath>lib\System.Configuration.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.Core">
+            <HintPath>lib\System.Core.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System">
+            <HintPath>lib\System.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.Security">
+            <HintPath>lib\System.Security.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="System.Xml">
+            <HintPath>lib\System.Xml.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.AccessibilityModule">
+            <HintPath>lib\UnityEngine.AccessibilityModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.AIModule">
+            <HintPath>lib\UnityEngine.AIModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.Analytics">
+            <HintPath>lib\UnityEngine.Analytics.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.AnimationModule">
+            <HintPath>lib\UnityEngine.AnimationModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.ARModule">
+            <HintPath>lib\UnityEngine.ARModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.AssetBundleModule">
+            <HintPath>lib\UnityEngine.AssetBundleModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.AudioModule">
+            <HintPath>lib\UnityEngine.AudioModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.ClothModule">
+            <HintPath>lib\UnityEngine.ClothModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.ClusterInputModule">
+            <HintPath>lib\UnityEngine.ClusterInputModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.ClusterRendererModule">
+            <HintPath>lib\UnityEngine.ClusterRendererModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>lib\UnityEngine.CoreModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.CrashReportingModule">
+            <HintPath>lib\UnityEngine.CrashReportingModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.DirectorModule">
+            <HintPath>lib\UnityEngine.DirectorModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine">
+            <HintPath>lib\UnityEngine.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.GameCenterModule">
+            <HintPath>lib\UnityEngine.GameCenterModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.GridModule">
+            <HintPath>lib\UnityEngine.GridModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.ImageConversionModule">
+            <HintPath>lib\UnityEngine.ImageConversionModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.IMGUIModule">
+            <HintPath>lib\UnityEngine.IMGUIModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.InputModule">
+            <HintPath>lib\UnityEngine.InputModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.JSONSerializeModule">
+            <HintPath>lib\UnityEngine.JSONSerializeModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.Networking">
+            <HintPath>lib\UnityEngine.Networking.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.ParticlesLegacyModule">
+            <HintPath>lib\UnityEngine.ParticlesLegacyModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.ParticleSystemModule">
+            <HintPath>lib\UnityEngine.ParticleSystemModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.PerformanceReportingModule">
+            <HintPath>lib\UnityEngine.PerformanceReportingModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.Physics2DModule">
+            <HintPath>lib\UnityEngine.Physics2DModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.PhysicsModule">
+            <HintPath>lib\UnityEngine.PhysicsModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.ScreenCaptureModule">
+            <HintPath>lib\UnityEngine.ScreenCaptureModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.SharedInternalsModule">
+            <HintPath>lib\UnityEngine.SharedInternalsModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.SpatialTracking">
+            <HintPath>lib\UnityEngine.SpatialTracking.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.SpriteMaskModule">
+            <HintPath>lib\UnityEngine.SpriteMaskModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.SpriteShapeModule">
+            <HintPath>lib\UnityEngine.SpriteShapeModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.StandardEvents">
+            <HintPath>lib\UnityEngine.StandardEvents.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.StyleSheetsModule">
+            <HintPath>lib\UnityEngine.StyleSheetsModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.TerrainModule">
+            <HintPath>lib\UnityEngine.TerrainModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.TerrainPhysicsModule">
+            <HintPath>lib\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.TextRenderingModule">
+            <HintPath>lib\UnityEngine.TextRenderingModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.TilemapModule">
+            <HintPath>lib\UnityEngine.TilemapModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.Timeline">
+            <HintPath>lib\UnityEngine.Timeline.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.UI">
+            <HintPath>lib\UnityEngine.UI.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.UIElementsModule">
+            <HintPath>lib\UnityEngine.UIElementsModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.UIModule">
+            <HintPath>lib\UnityEngine.UIModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.UNETModule">
+            <HintPath>lib\UnityEngine.UNETModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.UnityAnalyticsModule">
+            <HintPath>lib\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.UnityConnectModule">
+            <HintPath>lib\UnityEngine.UnityConnectModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+            <HintPath>lib\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.UnityWebRequestModule">
+            <HintPath>lib\UnityEngine.UnityWebRequestModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+            <HintPath>lib\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.UnityWebRequestWWWModule">
+            <HintPath>lib\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.VehiclesModule">
+            <HintPath>lib\UnityEngine.VehiclesModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.VideoModule">
+            <HintPath>lib\UnityEngine.VideoModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.VRModule">
+            <HintPath>lib\UnityEngine.VRModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.WebModule">
+            <HintPath>lib\UnityEngine.WebModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityEngine.WindModule">
+            <HintPath>lib\UnityEngine.WindModule.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="UnityFbxPrefab">
+            <HintPath>lib\UnityFbxPrefab.dll</HintPath>
+            <Publicize>true</Publicize>
+        </Reference>
+    </ItemGroup>
+</Project>
