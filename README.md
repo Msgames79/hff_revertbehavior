@@ -15,27 +15,27 @@ revertbehavior <commands> <option>
 rb <commands> [<option>]
 ```
 ### `commands`一覧(1行目はフルネームによる記述、2行目はエイリアスを使用した最短記法)
+カメラ衝突の復活
 ```
 revertbehavior collidedefaulttrigger [<option>]
 ```
 ```
 rb cdt [<option>]
 ```
-カメラ衝突の復活
+リスポーン高度の変更
 ```
 revertbehavior revertrespawnheight [<option>]
 ```
 ```
 rb rrh [<option>]
 ```
-リスポーン高度の変更
+ウォーター旧スポーンの復活
 ```
 revertbehavior revertwaterspawn [<option>]
 ```
 ```
 rb rws [<option>]
 ```
-ウォーター旧スポーンの復活
 `<option>`は全て設定する値が`bool`なので共通
 - 引数なし : `True`/`False`を切り替え
 - 正規攻略`^(t(rue)?|1|on)$`に一致する場合: `True`に設定
