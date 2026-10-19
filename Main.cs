@@ -197,21 +197,50 @@ public class Main : BaseUnityPlugin
         Debug.Log($"Set \"{name}\" to \"{boolean}\"");
     }
 
-    [HarmonyPatch(typeof(Physics), nameof(Physics.Raycast), new Type[] { typeof(Ray), typeof(RaycastHit), typeof(float), typeof(int), typeof(QueryTriggerInteraction) }, new ArgumentType[] { ArgumentType.Normal, ArgumentType.Out, ArgumentType.Normal, ArgumentType.Normal, ArgumentType.Normal })]
+    [HarmonyPatch(typeof(CameraController3), nameof(CameraController3.CompensateForWallsNearPlane))]
     static class CollideDefaultTrigger
     {
         [HarmonyPrefix]
-        public static bool Invoke(ref Ray ray, out RaycastHit hitInfo, ref float maxDistance, ref int layerMask, ref QueryTriggerInteraction queryTriggerInteraction, ref bool __result)
+        public static bool Prefix(ref Vector3 targetPos, ref Quaternion lookRot, ref float desiredDist, ref float minDist, ref CameraController3 __instance, ref float __result)
         {
-            if (collideDefaultTrigger)
+            Vector3 vector = lookRot * Vector3.forward;
+            float nearClipPlane = __instance.gameCam.nearClipPlane;
+            __instance.transform.rotation = lookRot;
+            __instance.transform.position = targetPos - vector * (__instance.gameCam.nearClipPlane + minDist);
+            ref Vector3 reference = ref __instance.rayStarts[0];
+            reference = __instance.gameCam.ViewportToWorldPoint(new Vector3(0f, 0f, nearClipPlane));
+            ref Vector3 reference2 = ref __instance.rayStarts[1];
+            reference2 = __instance.gameCam.ViewportToWorldPoint(new Vector3(0f, 1f, nearClipPlane));
+            ref Vector3 reference3 = ref __instance.rayStarts[2];
+            reference3 = __instance.gameCam.ViewportToWorldPoint(new Vector3(1f, 0f, nearClipPlane));
+            ref Vector3 reference4 = ref __instance.rayStarts[3];
+            reference4 = __instance.gameCam.ViewportToWorldPoint(new Vector3(1f, 1f, nearClipPlane));
+            float num = desiredDist - nearClipPlane;
+            for (int i = 0; i < __instance.rayStarts.Length; i++)
             {
-                hitInfo = new RaycastHit();
-                __result = Physics.Raycast(ray.origin, ray.direction, out hitInfo, maxDistance, layerMask, QueryTriggerInteraction.UseGlobal);
+                Ray ray = new Ray(__instance.rayStarts[i], -vector);
+                if (collideDefaultTrigger)
+                {
+                    if (Physics.Raycast(ray, out var hitInfo, num, __instance.wallLayers) && hitInfo.distance < num)
+                    {
+                        num = hitInfo.distance;
+                    }
+                }
+                else
+                {
+                    if (Physics.Raycast(ray, out var hitInfo, num, __instance.wallLayers, QueryTriggerInteraction.Ignore) && hitInfo.distance < num)
+                    {
+                        num = hitInfo.distance;
+                    }
+                }
             }
-            else
+
+            if (!__instance.useWallDistance)
             {
-                __result = Physics.Raycast(ray.origin, ray.direction, out hitInfo, maxDistance, layerMask, queryTriggerInteraction);
+                num += nearClipPlane + minDist;
             }
+
+            __result = Mathf.Max(num - 0.1f, minDist * 2f);
             return false;
         }
     }

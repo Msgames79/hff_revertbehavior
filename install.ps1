@@ -1,6 +1,8 @@
 # https://github.com/constup/vdf-converter-powershell/blob/master/src%2Fvdf-converter.ps1
 #Licensed under MPL 2.0
 #https://www.mozilla.org/en-US/MPL/2.0/
+$repoName = "hff_revertbehavior"
+$pluginName = "hff_RevertBehavior"
 
 function ConvertFrom-Vdf {
     param (
@@ -107,30 +109,30 @@ if ($PSVersionTable.PSVersion.Major -eq 5 -or $IsWindows) {
         Stop-Process -Name "Human"
     }
     $ProgressPreference = 'SilentlyContinue'
-    $latestApi = Invoke-WebRequest "https://api.github.com/repos/Msgames79/hff_revertbehavior/releases/latest" -UseBasicParsing
+    $latestApi = Invoke-WebRequest "https://api.github.com/repos/Msgames79/${repoName}/releases/latest" -UseBasicParsing
     $ProgressPreference = 'Continue'
     if ([Math]::Truncate($latestApi.StatusCode / 100) -eq 2) {
         $latestJson = $latestApi.Content | ConvertFrom-Json
         $latestTagName = $latestJson.tag_name
-        $latestFileApi = Invoke-WebRequest "https://github.com/Msgames79/hff_revertbehavior/releases/download/${latestTagName}/hff_RevertBehavior-${latestTagName}.dll" -UseBasicParsing
+        $latestFileApi = Invoke-WebRequest "https://github.com/Msgames79/${repoName}/releases/download/${latestTagName}/${pluginName}-${latestTagName}.dll" -UseBasicParsing
         if ([Math]::Truncate($latestFileApi.StatusCode / 100) -eq 2) {
-            if (Test-Path (Join-Path "BepInEx" "plugins" "hff_RevertBehavior-${latestTagName}.dll")) {
-                if ("SHA256:" + (Get-FileHash (Join-Path "BepInEx" "plugins" "hff_RevertBehavior-${latestTagName}.dll") -Algorithm SHA256).Hash -eq $latestJson.assets.digest.ToUpper()) {
-                    Write-Host "Achievement Helper is up to date"
+            if (Test-Path (Join-Path "BepInEx" "plugins" "${pluginName}-${latestTagName}.dll")) {
+                if ("SHA256:" + (Get-FileHash (Join-Path "BepInEx" "plugins" "${pluginName}-${latestTagName}.dll") -Algorithm SHA256).Hash -eq $latestJson.assets.digest.ToUpper()) {
+                    Write-Host "${pluginName} is up to date"
                     exit 0
                 }
             }
-            [System.IO.File]::WriteAllBytes((Join-Path $hffpath "BepInEx" "plugins" "hff_RevertBehavior-${latestTagName}.dll"), $latestFileApi.Content)
+            [System.IO.File]::WriteAllBytes((Join-Path $hffpath "BepInEx" "plugins" "${pluginName}-${latestTagName}.dll"), $latestFileApi.Content)
             Write-Host "Operation completed successfully."
             exit 0
         }
         else {
-            Write-Error "Error 7: 'https://github.com/Msgames79/hff_revertbehavior/releases/download/${latestTagName}/hff_RevertBehavior-${latestTagName}.dll' returned $($latestData.StatusCode)"
+            Write-Error "Error 7: 'https://github.com/Msgames79/${repoName}/releases/download/${latestTagName}/${pluginName}-${latestTagName}.dll' returned $($latestData.StatusCode)"
             exit 7
         }
     }
     else {
-        Write-Error "Error 6: 'https://api.github.com/repos/Msgames79/hff_revertbehavior/releases/latest' returned $($latestData.StatusCode)"
+        Write-Error "Error 6: 'https://api.github.com/repos/Msgames79/${repoName}/releases/latest' returned $($latestData.StatusCode)"
         exit 6
     }
 }
