@@ -1,4 +1,4 @@
-# hff_RevertbeBavior - Revert something. 今は無きあの仕様をもう一度。
+# hff_RevertBehavior - Revert something. 今は無きあの仕様をもう一度。
 
 ## 機能一覧 (全てGUIとコマンドの両方からアクセス可能)
 ### カメラ衝突の復活(ダークのゴール判定とか)(Jail Updateから)
